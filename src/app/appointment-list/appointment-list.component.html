@@ -1,0 +1,137 @@
+<div class="container-fluid bg-gradient-primary min-vh-100 py-4">
+  <div class="container">
+    <!-- Header Section -->
+    <div class="row justify-content-center mb-5">
+      <div class="col-lg-10">
+        <div class="header-card card border-0 shadow-lg animate-fade-in">
+          <div class="card-body text-center p-5">
+            <div class="icon-wrapper mb-4">
+              <i class="fas fa-calendar-check text-primary"></i>
+            </div>
+            <h1 class="display-4 fw-bold text-dark mb-3">TODO Action Tracker</h1>
+            <p class="lead text-muted">Organize your schedule with style and ease</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add Appointment Form -->
+    <div class="row justify-content-center mb-5">
+      <div class="col-lg-10">
+        <div class="form-card card border-0 shadow-lg animate-slide-up">
+          <div class="card-header bg-primary text-white text-center py-3">
+            <h4 class="mb-0"><i class="fas fa-plus-circle me-2"></i>Add New TODO Action Item</h4>
+          </div>
+          <div class="card-body p-4">
+            <form class="appointment-form">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <div class="form-floating">
+                    <input 
+                      class="form-control form-control-lg input-animated" 
+                      [(ngModel)]="newAppointmentTitle" 
+                      placeholder="Appointment Description"
+                      id="appointmentTitle"
+                      name="appointmentTitle">
+                    <label for="appointmentTitle">
+                      <i class="fas fa-clipboard-list me-2"></i>TODO Description
+                    </label>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-floating">
+                    <input 
+                      class="form-control form-control-lg input-animated" 
+                      [(ngModel)]="newAppointmentDate" 
+                      type="date" 
+                      id="appointmentDate"
+                      name="appointmentDate">
+                    <label for="appointmentDate">
+                      <i class="fas fa-calendar-alt me-2"></i>TODO Date
+                    </label>
+                  </div>
+                </div>
+                <div class="col-md-2 d-flex align-items-end">
+                  <button 
+                    class="btn btn-primary btn-lg w-100 add-btn pulse-btn" 
+                    (click)="addAppointment()"
+                    type="button">
+                    <i class="fas fa-plus me-2"></i>Add
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Appointments List -->
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        <div class="appointments-section">
+          <div class="section-header text-center mb-4">
+            <h2 class="display-5 fw-bold text-white mb-2">
+              <i class="fas fa-list-ul me-3"></i>Your TODO List
+            </h2>
+            <div class="underline"></div>
+          </div>
+
+          <!-- Empty State -->
+          <div *ngIf="appointments.length === 0" class="empty-state card border-0 shadow text-center p-5 animate-fade-in">
+            <div class="empty-icon mb-4">
+              <i class="fas fa-calendar-times text-muted"></i>
+            </div>
+            <h4 class="text-muted mb-3">No appointments yet</h4>
+            <p class="text-muted">Add your first appointment to get started!</p>
+          </div>
+
+          <!-- Appointments Grid -->
+          <div class="appointments-grid" *ngIf="appointments.length > 0">
+    <div 
+        class="appointment-card card border-0 shadow-sm mb-3 animate-slide-in" 
+        *ngFor="let appointment of appointments; index as i"
+        [style.animation-delay]="i * 0.1 + 's'">
+        
+        <div class="card-body p-4">
+            <div class="row align-items-center g-3">
+            <!-- Now 'appointment' is available in this scope -->
+            <div class="col-auto">
+                <span class="badge bg-primary rounded-pill">#{{appointment.id}}</span>
+            </div>
+            
+            <div class="col">
+                <div class="appointment-details">
+                <h5 class="appointment-title mb-2">
+                    <i class="fas fa-bookmark text-primary me-2"></i>
+                    {{appointment.title}}
+                </h5>
+                </div>
+            </div>
+            
+            <div class="col-md-3 col-12 mt-2 mt-md-0">
+                <div class="appointment-date">
+                <span class="date-badge">
+                    <i class="fas fa-calendar text-info me-2"></i>
+                    {{appointment.date | date:'dd.MM.yyyy'}}
+                </span>
+                </div>
+            </div>
+            
+            <div class="col-md-2 col-12 mt-3 mt-md-0 text-end">
+                <button 
+                class="btn btn-outline-danger btn-sm delete-btn hover-effect" 
+                (click)="deleteAppointment(i)"
+                title="Delete Appointment">
+                <i class="fas fa-trash-alt me-1"></i>Delete
+                </button>
+            </div>
+            </div>
+        </div>
+        </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
